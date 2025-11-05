@@ -1,0 +1,423 @@
+--
+-- PostgreSQL database dump
+--
+
+\restrict hZBbx4XmbicLTDc4fZY1BhHG17sApc5mRKDV01iRPXruscYaTL7KNS2SIDkSKZu
+
+-- Dumped from database version 18.0
+-- Dumped by pg_dump version 18.0
+
+-- Started on 2025-11-05 16:57:24
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET transaction_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+SET default_tablespace = '';
+
+SET default_table_access_method = heap;
+
+--
+-- TOC entry 224 (class 1259 OID 16422)
+-- Name: categories; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.categories (
+    id integer NOT NULL,
+    name character varying(100) NOT NULL,
+    slug character varying(150) NOT NULL
+);
+
+
+ALTER TABLE public.categories OWNER TO postgres;
+
+--
+-- TOC entry 223 (class 1259 OID 16421)
+-- Name: categories_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.categories_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.categories_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 5055 (class 0 OID 0)
+-- Dependencies: 223
+-- Name: categories_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.categories_id_seq OWNED BY public.categories.id;
+
+
+--
+-- TOC entry 225 (class 1259 OID 16435)
+-- Name: post_categories; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.post_categories (
+    post_id integer NOT NULL,
+    category_id integer NOT NULL
+);
+
+
+ALTER TABLE public.post_categories OWNER TO postgres;
+
+--
+-- TOC entry 222 (class 1259 OID 16403)
+-- Name: posts; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.posts (
+    id integer NOT NULL,
+    title character varying(255) NOT NULL,
+    content text NOT NULL,
+    excerpt text,
+    slug character varying(300) NOT NULL,
+    author character varying(100) DEFAULT 'Anonymous'::character varying,
+    featured_image character varying(500),
+    is_published boolean DEFAULT true,
+    created_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
+    updated_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP
+);
+
+
+ALTER TABLE public.posts OWNER TO postgres;
+
+--
+-- TOC entry 221 (class 1259 OID 16402)
+-- Name: posts_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.posts_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.posts_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 5056 (class 0 OID 0)
+-- Dependencies: 221
+-- Name: posts_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.posts_id_seq OWNED BY public.posts.id;
+
+
+--
+-- TOC entry 220 (class 1259 OID 16390)
+-- Name: users; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.users (
+    id integer NOT NULL,
+    name character varying(100) NOT NULL,
+    email character varying(100) NOT NULL,
+    age integer,
+    created_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP
+);
+
+
+ALTER TABLE public.users OWNER TO postgres;
+
+--
+-- TOC entry 219 (class 1259 OID 16389)
+-- Name: users_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.users_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.users_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 5057 (class 0 OID 0)
+-- Dependencies: 219
+-- Name: users_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.users_id_seq OWNED BY public.users.id;
+
+
+--
+-- TOC entry 4877 (class 2604 OID 16425)
+-- Name: categories id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.categories ALTER COLUMN id SET DEFAULT nextval('public.categories_id_seq'::regclass);
+
+
+--
+-- TOC entry 4872 (class 2604 OID 16406)
+-- Name: posts id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.posts ALTER COLUMN id SET DEFAULT nextval('public.posts_id_seq'::regclass);
+
+
+--
+-- TOC entry 4870 (class 2604 OID 16393)
+-- Name: users id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.users ALTER COLUMN id SET DEFAULT nextval('public.users_id_seq'::regclass);
+
+
+--
+-- TOC entry 5048 (class 0 OID 16422)
+-- Dependencies: 224
+-- Data for Name: categories; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.categories (id, name, slug) FROM stdin;
+1	Technology	technology
+2	Lifestyle	lifestyle
+3	Travel	travel
+4	Food	food
+25	my articles	my-articles
+\.
+
+
+--
+-- TOC entry 5049 (class 0 OID 16435)
+-- Dependencies: 225
+-- Data for Name: post_categories; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.post_categories (post_id, category_id) FROM stdin;
+1	1
+2	4
+2	2
+2	1
+3	4
+4	1
+4	2
+5	1
+5	4
+6	2
+7	4
+7	2
+8	3
+8	1
+9	2
+10	4
+10	1
+11	3
+12	1
+13	4
+14	4
+14	1
+14	2
+15	3
+15	2
+16	1
+16	3
+17	4
+18	1
+18	3
+19	1
+19	3
+19	2
+20	4
+21	3
+22	4
+23	2
+23	1
+24	25
+\.
+
+
+--
+-- TOC entry 5046 (class 0 OID 16403)
+-- Dependencies: 222
+-- Data for Name: posts; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.posts (id, title, content, excerpt, slug, author, featured_image, is_published, created_at, updated_at) FROM stdin;
+1	Getting Started with React	React is a popular JavaScript library for building user interfaces. In this post, we'll explore the basics of React components, state, and props.	Learn the fundamentals of React and how to build your first component.	getting-started-with-react	John Doe	https://picsum.photos/800/400?random=1	t	2025-06-15 11:37:05.371917	2025-11-05 11:37:05.371917
+2	The Art of Cooking Pasta	Cooking perfect pasta is both a science and an art. From choosing the right pasta shape to mastering the al dente texture, this guide covers everything you need to know.	Master the techniques for cooking perfect pasta every time.	art-of-cooking-pasta	Maria Garcia	https://picsum.photos/800/400?random=2	t	2025-10-19 11:37:05.400724	2025-11-05 11:37:05.400724
+3	Traveling on a Budget	You don't need to be rich to see the world. Here are practical tips for traveling on a budget without sacrificing experiences.	Discover how to travel the world without breaking the bank.	traveling-on-budget	Alex Chen	https://picsum.photos/800/400?random=3	t	2025-05-05 11:37:05.403231	2025-11-05 11:37:05.403231
+4	Introduction to Node.js	Node.js has revolutionized backend development. Learn about its event-driven architecture and how to build scalable applications.	A beginner's guide to Node.js and its core concepts.	introduction-to-nodejs	Sarah Johnson	https://picsum.photos/800/400?random=4	t	2024-12-09 11:37:05.404162	2025-11-05 11:37:05.404162
+5	Morning Routine for Productivity	How you start your day determines your productivity. Here's a morning routine that successful people swear by.	Optimize your morning routine for maximum productivity.	morning-routine-productivity	David Wilson	https://picsum.photos/800/400?random=5	t	2025-07-27 11:37:05.405633	2025-11-05 11:37:05.405633
+6	Best Hiking Trails in Colorado	Colorado offers some of the most breathtaking hiking trails in the US. Here are our top picks for all skill levels.	Explore the most scenic hiking trails in Colorado.	best-hiking-trails-colorado	Emily Roberts	https://picsum.photos/800/400?random=6	t	2025-05-07 11:37:05.406644	2025-11-05 11:37:05.406644
+7	Python for Data Science	Python has become the go-to language for data science. Learn about essential libraries like Pandas, NumPy, and Matplotlib.	Get started with Python for data analysis and visualization.	python-for-data-science	Mike Thompson	https://picsum.photos/800/400?random=7	t	2025-01-17 11:37:05.407512	2025-11-05 11:37:05.407512
+8	Healthy Smoothie Recipes	Start your day with these nutritious and delicious smoothie recipes that are packed with vitamins and energy.	5 healthy smoothie recipes for breakfast or snacks.	healthy-smoothie-recipes	Lisa Park	https://picsum.photos/800/400?random=8	t	2024-11-10 11:37:05.408372	2025-11-05 11:37:05.408372
+9	Building RESTful APIs with Express	Learn how to create robust RESTful APIs using Express.js, including routing, middleware, and error handling.	A comprehensive guide to building APIs with Express.js.	building-restful-apis-express	Kevin Martinez	https://picsum.photos/800/400?random=9	t	2025-01-01 11:37:05.409208	2025-11-05 11:37:05.409208
+10	Minimalist Lifestyle Benefits	Embracing minimalism can lead to less stress and more fulfillment. Here's how to start your minimalist journey.	Discover the benefits of living with less.	minimalist-lifestyle-benefits	Rachel Green	https://picsum.photos/800/400?random=10	t	2025-04-28 11:37:05.409868	2025-11-05 11:37:05.409868
+11	Bali Travel Guide 2024	Everything you need to know for your trip to Bali - from cultural etiquette to hidden gems off the tourist trail.	Your ultimate guide to traveling in Bali.	bali-travel-guide-2024	Tom Anderson	https://picsum.photos/800/400?random=11	t	2024-12-27 11:37:05.41075	2025-11-05 11:37:05.41075
+12	Vue.js vs React: Which to Choose?	Comparing two popular frontend frameworks to help you decide which one fits your project needs.	A detailed comparison of Vue.js and React.	vuejs-vs-react-comparison	Jennifer Lee	https://picsum.photos/800/400?random=12	t	2025-07-09 11:37:05.411291	2025-11-05 11:37:05.411291
+13	Home Workout Routine	No gym? No problem. This effective home workout routine requires minimal equipment and space.	Stay fit with this comprehensive home workout plan.	home-workout-routine	Chris Taylor	https://picsum.photos/800/400?random=13	t	2025-08-29 11:37:05.411845	2025-11-05 11:37:05.411845
+14	Italian Coffee Culture	Discover the rich coffee traditions of Italy and learn how to make authentic Italian coffee at home.	Explore the art of Italian coffee making.	italian-coffee-culture	Sophia Rossi	https://picsum.photos/800/400?random=14	t	2024-12-20 11:37:05.412352	2025-11-05 11:37:05.412352
+15	Docker for Beginners	Containerization made easy with Docker. Learn the basics and how to containerize your applications.	Get started with Docker and containerization.	docker-for-beginners	Daniel Kim	https://picsum.photos/800/400?random=15	t	2025-05-23 11:37:05.413369	2025-11-05 11:37:05.413369
+16	Digital Detox: Why and How	Taking breaks from digital devices can improve mental health and relationships. Here's how to do a digital detox.	Learn the benefits of disconnecting from technology.	digital-detox-guide	Amanda White	https://picsum.photos/800/400?random=16	t	2024-11-26 11:37:05.414149	2025-11-05 11:37:05.414149
+17	Japanese Street Food Tour	Explore the vibrant world of Japanese street food, from takoyaki to taiyaki and everything in between.	A culinary journey through Japan's street food scene.	japanese-street-food-tour	Kenji Tanaka	https://picsum.photos/800/400?random=17	t	2025-07-02 11:37:05.41488	2025-11-05 11:37:05.41488
+18	TypeScript Best Practices	Writing better TypeScript code with these essential best practices and patterns.	Improve your TypeScript code with these tips.	typescript-best-practices	Brian Clark	https://picsum.photos/800/400?random=18	t	2024-12-11 11:37:05.415412	2025-11-05 11:37:05.415412
+19	Mindfulness Meditation Guide	Learn how to practice mindfulness meditation to reduce stress and increase focus in your daily life.	Begin your mindfulness meditation practice.	mindfulness-meditation-guide	Priya Patel	https://picsum.photos/800/400?random=19	t	2025-05-09 11:37:05.416145	2025-11-05 11:37:05.416145
+20	Mexican Cuisine Essentials	Master the fundamental techniques and ingredients of authentic Mexican cooking.	Explore the essentials of Mexican cuisine.	mexican-cuisine-essentials	Carlos Mendez	https://picsum.photos/800/400?random=20	t	2025-03-16 11:37:05.417158	2025-11-05 11:37:05.417158
+21	Cloud Computing Explained	Understanding cloud computing models (IaaS, PaaS, SaaS) and when to use each one for your projects.	A clear explanation of cloud computing concepts.	cloud-computing-explained	Nancy Drew	https://picsum.photos/800/400?random=21	f	2025-01-09 11:37:05.417674	2025-11-05 11:37:05.417674
+22	Urban Gardening Tips	Grow your own food even in small spaces with these urban gardening techniques and container gardening ideas.	Start your urban garden with these practical tips.	urban-gardening-tips	Marcus Rivera	https://picsum.photos/800/400?random=22	t	2025-02-23 11:37:05.418164	2025-11-05 11:37:05.418164
+23	GraphQL Introduction	Learn how GraphQL provides a more efficient alternative to REST APIs with its flexible query language.	Get started with GraphQL for API development.	graphql-introduction	Olivia Scott	https://picsum.photos/800/400?random=23	t	2025-06-01 11:37:05.41866	2025-11-05 11:37:05.41866
+24	this is the post title	this is the post content	this is the breif summary of the article	this-is-the-post-title	Atul	https://images.pexels.com/photos/2693529/pexels-photo-2693529.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940	t	2025-11-05 16:45:37.493028	2025-11-05 16:46:44.889443
+\.
+
+
+--
+-- TOC entry 5044 (class 0 OID 16390)
+-- Dependencies: 220
+-- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.users (id, name, email, age, created_at) FROM stdin;
+\.
+
+
+--
+-- TOC entry 5058 (class 0 OID 0)
+-- Dependencies: 223
+-- Name: categories_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.categories_id_seq', 81, true);
+
+
+--
+-- TOC entry 5059 (class 0 OID 0)
+-- Dependencies: 221
+-- Name: posts_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.posts_id_seq', 346, true);
+
+
+--
+-- TOC entry 5060 (class 0 OID 0)
+-- Dependencies: 219
+-- Name: users_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.users_id_seq', 1, false);
+
+
+--
+-- TOC entry 4887 (class 2606 OID 16432)
+-- Name: categories categories_name_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.categories
+    ADD CONSTRAINT categories_name_key UNIQUE (name);
+
+
+--
+-- TOC entry 4889 (class 2606 OID 16430)
+-- Name: categories categories_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.categories
+    ADD CONSTRAINT categories_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 4891 (class 2606 OID 16434)
+-- Name: categories categories_slug_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.categories
+    ADD CONSTRAINT categories_slug_key UNIQUE (slug);
+
+
+--
+-- TOC entry 4893 (class 2606 OID 16441)
+-- Name: post_categories post_categories_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.post_categories
+    ADD CONSTRAINT post_categories_pkey PRIMARY KEY (post_id, category_id);
+
+
+--
+-- TOC entry 4883 (class 2606 OID 16418)
+-- Name: posts posts_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.posts
+    ADD CONSTRAINT posts_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 4885 (class 2606 OID 16420)
+-- Name: posts posts_slug_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.posts
+    ADD CONSTRAINT posts_slug_key UNIQUE (slug);
+
+
+--
+-- TOC entry 4879 (class 2606 OID 16401)
+-- Name: users users_email_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.users
+    ADD CONSTRAINT users_email_key UNIQUE (email);
+
+
+--
+-- TOC entry 4881 (class 2606 OID 16399)
+-- Name: users users_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.users
+    ADD CONSTRAINT users_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 4894 (class 2606 OID 16447)
+-- Name: post_categories post_categories_category_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.post_categories
+    ADD CONSTRAINT post_categories_category_id_fkey FOREIGN KEY (category_id) REFERENCES public.categories(id) ON DELETE CASCADE;
+
+
+--
+-- TOC entry 4895 (class 2606 OID 16442)
+-- Name: post_categories post_categories_post_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.post_categories
+    ADD CONSTRAINT post_categories_post_id_fkey FOREIGN KEY (post_id) REFERENCES public.posts(id) ON DELETE CASCADE;
+
+
+-- Completed on 2025-11-05 16:57:24
+
+--
+-- PostgreSQL database dump complete
+--
+
+\unrestrict hZBbx4XmbicLTDc4fZY1BhHG17sApc5mRKDV01iRPXruscYaTL7KNS2SIDkSKZu
+
